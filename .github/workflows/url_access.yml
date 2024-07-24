@@ -1,0 +1,23 @@
+name: Test URL Access
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check_url:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Test URL access
+        run: |
+          n=0
+          until [ $n -ge 5 ]
+          do
+            curl -f https://code.visualstudio.com/api/working-with-extensions/bundling-extension && break
+            n=$((n+1))
+            sleep 10
+          done
