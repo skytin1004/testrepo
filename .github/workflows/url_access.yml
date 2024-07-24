@@ -14,20 +14,36 @@ jobs:
       
       - name: Test URL access for code.visualstudio.com
         run: |
+          success_count=0
+          failure_count=0
           n=0
           until [ $n -ge 5 ]
           do
-            curl -f https://code.visualstudio.com/api/working-with-extensions/bundling-extension && break
+            if curl -f https://code.visualstudio.com/api/working-with-extensions/bundling-extension; then
+              success_count=$((success_count+1))
+              break
+            else
+              failure_count=$((failure_count+1))
+            fi
             n=$((n+1))
             sleep 10
           done
+          echo "Success: $success_count, Failure: $failure_count"
       
       - name: Test URL access for techcommunity.microsoft.com
         run: |
+          success_count=0
+          failure_count=0
           n=0
           until [ $n -ge 5 ]
           do
-            curl -f https://techcommunity.microsoft.com/t5/educator-developer-blog/fine-tune-and-integrate-custom-phi-3-models-with-prompt-flow-in/ba-p/4191726?wt.mc_id=studentamb_279723 && break
+            if curl -f https://techcommunity.microsoft.com/t5/educator-developer-blog/fine-tune-and-integrate-custom-phi-3-models-with-prompt-flow-in/ba-p/4191726?wt.mc_id=studentamb_279723; then
+              success_count=$((success_count+1))
+              break
+            else
+              failure_count=$((failure_count+1))
+            fi
             n=$((n+1))
             sleep 10
           done
+          echo "Success: $success_count, Failure: $failure_count"
