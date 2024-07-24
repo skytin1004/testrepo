@@ -14,36 +14,40 @@ jobs:
       
       - name: Test URL access for code.visualstudio.com
         run: |
-          success_count=0
-          failure_count=0
           n=0
+          success=false
           until [ $n -ge 5 ]
           do
-            if curl -f https://code.visualstudio.com/api/working-with-extensions/bundling-extension; then
-              success_count=$((success_count+1))
+            if curl -o /dev/null -sf https://code.visualstudio.com/api/working-with-extensions/bundling-extension; then
+              success=true
               break
-            else
-              failure_count=$((failure_count+1))
             fi
             n=$((n+1))
             sleep 10
           done
-          echo "Success: $success_count, Failure: $failure_count"
+          if [ "$success" = false ]; then
+            echo "Failed to access https://code.visualstudio.com/api/working-with-extensions/bundling-extension after 5 attempts"
+            exit 1
+          else
+            echo "Successfully accessed https://code.visualstudio.com/api/working-with-extensions/bundling-extension"
+          fi
       
       - name: Test URL access for techcommunity.microsoft.com
         run: |
-          success_count=0
-          failure_count=0
           n=0
+          success=false
           until [ $n -ge 5 ]
           do
-            if curl -f https://techcommunity.microsoft.com/t5/educator-developer-blog/fine-tune-and-integrate-custom-phi-3-models-with-prompt-flow-in/ba-p/4191726?wt.mc_id=studentamb_279723; then
-              success_count=$((success_count+1))
+            if curl -o /dev/null -sf https://techcommunity.microsoft.com/t5/educator-developer-blog/fine-tune-and-integrate-custom-phi-3-models-with-prompt-flow-in/ba-p/4191726?wt.mc_id=studentamb_279723; then
+              success=true
               break
-            else
-              failure_count=$((failure_count+1))
             fi
             n=$((n+1))
             sleep 10
           done
-          echo "Success: $success_count, Failure: $failure_count"
+          if [ "$success" = false ]; then
+            echo "Failed to access https://techcommunity.microsoft.com/t5/educator-developer-blog/fine-tune-and-integrate-custom-phi-3-models-with-prompt-flow-in/ba-p/4191726?wt.mc_id=studentamb_279723 after 5 attempts"
+            exit 1
+          else
+            echo "Successfully accessed https://techcommunity.microsoft.com/t5/educator-developer-blog/fine-tune-and-integrate-custom-phi-3-models-with-prompt-flow-in/ba-p/4191726?wt.mc_id=studentamb_279723"
+          fi
