@@ -6,18 +6,28 @@ on:
       - main
 
 jobs:
-  check_url:
+  check_urls:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       
-      - name: Test URL access
+      - name: Test URL access for code.visualstudio.com
         run: |
           n=0
           until [ $n -ge 5 ]
           do
             curl -f https://code.visualstudio.com/api/working-with-extensions/bundling-extension && break
+            n=$((n+1))
+            sleep 10
+          done
+      
+      - name: Test URL access for techcommunity.microsoft.com
+        run: |
+          n=0
+          until [ $n -ge 5 ]
+          do
+            curl -f https://techcommunity.microsoft.com/t5/educator-developer-blog/fine-tune-and-integrate-custom-phi-3-models-with-prompt-flow-in/ba-p/4191726?wt.mc_id=studentamb_279723 && break
             n=$((n+1))
             sleep 10
           done
